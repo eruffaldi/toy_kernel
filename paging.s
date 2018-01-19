@@ -28,18 +28,19 @@ fill_PDT:
 
 init_paging:
 /*
-Disable paging -> already disabled by multiboot loader
-Set the PAE enable bit in CR4
-First do this! -> Load CR3 with the physical address of the PML4
-Enable long mode by setting the EFER.LME flag in MSR 0xC0000080
-Enable paging through cr0
+No need to disable paging -> already disabled by multiboot loader
+So, we:
+- Set the PAE enable bit in CR4
+- But first we need to load CR3 with the physical address of the PML4
+Then we can enable long mode by setting the EFER.LME flag in MSR 0xC0000080
+Finally, we enable paging through cr0
 */
+  mov $PML4, %eax
+  mov %eax, %cr3
+
   mov %cr4, %eax
   or  $1 << 5, %eax
   mov %eax, %cr4
-
-  mov $PML4, %eax
-  mov %eax, %cr3
 
   mov $0xC0000080, %ecx
   rdmsr
