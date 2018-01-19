@@ -3,11 +3,11 @@ AS32=as --32
 CC64=gcc -m64
 AS64=as --64
 
-CC=$(CC32)
-AS=$(AS32)
+CC=$(CC64)
+AS=$(AS64)
 
 CFLAGS=-fno-stack-protector -ffreestanding -g -Wall
-LDFLAGS=-nostdlib -T kern.ld 
+LDFLAGS=-nostdlib -Wl,-z -Wl,max-page-size=0x1000 -T kern64.ld
 
 .SUFFIXES:
 kernel: kmain.o head.o trampoline64.o paging.o uvideo.o printf.o
@@ -17,8 +17,8 @@ head.o: head.S
 	$(CC) -c head.S
 
 %.s: %.c
-	$(CC32) $(CFLAGS) -fno-dwarf2-cfi-asm -S $<
-
+	echo .code32 > $@
+	$(CC32) $(CFLAGS) -fno-dwarf2-cfi-asm -S $< -o - >> $@
 %.o: %.s
 	$(CC) -c $<
 
