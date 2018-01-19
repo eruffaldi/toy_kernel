@@ -6,7 +6,7 @@ AS64=as --64
 CC=$(CC32)
 AS=$(AS32)
 
-CFLAGS=-fno-stack-protector -ffreestanding -g -Wall
+CFLAGS=-fno-pic -fno-stack-protector -ffreestanding -g -Wall
 LDFLAGS=-nostdlib -T kern.ld 
 
 .SUFFIXES:

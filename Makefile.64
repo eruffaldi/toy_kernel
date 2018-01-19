@@ -6,8 +6,8 @@ AS64=as --64
 CC=$(CC64)
 AS=$(AS64)
 
-CFLAGS=-fno-stack-protector -ffreestanding -g -Wall
-LDFLAGS=-nostdlib -Wl,-z -Wl,max-page-size=0x1000 -T kern64.ld
+CFLAGS=-fno-pic -fno-stack-protector -ffreestanding -g -Wall
+LDFLAGS=-nostdlib -Wl,-z -Wl,max-page-size=0x1000 -static -T kern64.ld
 
 .SUFFIXES:
 kernel: kmain.o head.o trampoline64.o paging.o uvideo.o printf.o
