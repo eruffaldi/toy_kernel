@@ -1,6 +1,6 @@
-CC32=gcc -m32
+CC32?=gcc -m32
 AS32=as --32
-CC64=gcc -m64
+CC64?=gcc -m64
 AS64=as --64
 
 CC=$(CC64)
@@ -11,7 +11,7 @@ LDFLAGS=-nostdlib -Wl,-z -Wl,max-page-size=0x1000 -static -T kern64.ld
 
 .SUFFIXES:
 kernel: kmain.o head.o trampoline64.o paging.o uvideo.o printf.o
-	$(CC) $(LDFLAGS) kmain.o head.o trampoline64.o paging.o uvideo.o printf.o -o kernel
+	$(LD) $(LDFLAGS) kmain.o head.o trampoline64.o paging.o uvideo.o printf.o -o kernel
 
 head.o: head.S
 	$(CC) -c head.S

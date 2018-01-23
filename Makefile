@@ -1,6 +1,7 @@
-CC32=gcc -m32
+
+CC32?=gcc -m32 ${OSXSPECIFIC}
 AS32=as --32
-CC64=gcc -m64
+CC64?=gcc -m64 ${OSXSPECIFIC}
 AS64=as --64
 
 CC=$(CC32)
